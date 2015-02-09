@@ -6,6 +6,8 @@ Manually download node/iojs header files for usage with node-gyp.
 npm install node-gyp-install
 ```
 
+[![build status](http://img.shields.io/travis/mafintosh/node-gyp-install.svg?style=flat)](http://travis-ci.org/mafintosh/node-gyp-install)
+
 ## Usage
 
 To download the node/iojs header files for the node/iojs version you currently
