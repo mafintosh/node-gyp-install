@@ -1,0 +1,30 @@
+{
+  "name": "node-gyp-install",
+  "version": "0.0.0",
+  "description": "Manually download node/iojs header files for usage with node-gyp.",
+  "main": "index.js",
+  "dependencies": {
+    "request": "^2.53.0",
+    "tar-fs": "^1.4.2",
+    "tar-map-stream": "^1.0.0"
+  },
+  "devDependencies": {
+    "standard": "^2.5.0"
+  },
+  "bin": {
+    "node-gyp-install": "./bin.js"
+  },
+  "scripts": {
+    "test": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mafintosh/node-gyp-install.git"
+  },
+  "author": "Mathias Buus (@mafintosh)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mafintosh/node-gyp-install/issues"
+  },
+  "homepage": "https://github.com/mafintosh/node-gyp-install"
+}
