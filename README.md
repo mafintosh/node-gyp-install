@@ -25,6 +25,17 @@ node-gyp-install
 npm install level # does not explode \o/
 ```
 
+### Download From Mirrors
+
+To use a mirror of the node/iojs header files, set `$NVM_NODEJS_ORG_MIRROR` and `$NVM_IOJS_ORG_MIRROR`.
+
+Take an exapmle for users from China:
+
+``` sh
+export NVM_NODEJS_ORG_MIRROR=http://npm.taobao.org/mirrors/node
+export NVM_IOJS_ORG_MIRROR=http://npm.taobao.org/mirrors/iojs
+```
+
 ## License
 
 MIT
