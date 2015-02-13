@@ -38,6 +38,54 @@ request(url)
   }))
   .pipe(tar.extract(target, {strip: 1}))
   .on('finish', function () {
-    fs.writeFileSync(path.join(target, 'installVersion'), '9') // yolo
-    console.log('node-gyp should now work for %s', process.version)
+    downloadLibs(function () {
+      fs.writeFileSync(path.join(target, 'installVersion'), '9') // yolo
+      console.log('node-gyp should now work for %s', process.version)
+    })
   })
+
+function downloadLibs (callback) {
+  if (process.platform !== 'win32') {
+    return callback()
+  }
+
+  var urls
+  if (io) {
+    urls = [
+      iojsDistUrl + process.version + '/win-x86/iojs.lib',
+      iojsDistUrl + process.version + '/win-x64/iojs.lib'
+    ]
+  } else {
+    urls = [
+      nodeDistUrl + process.version + '/node.lib',
+      nodeDistUrl + process.version + '/x64/node.lib'
+    ]
+  }
+
+  var count = 0
+  var done = function () {
+    count++
+    if (count === 2) {
+      callback()
+    }
+  }
+  urls.forEach(function (url, index) {
+    var arch = index === 0 ? 'ia32' : 'x64'
+    console.log('Fetching windows %s lib from %s', arch, url)
+    var nodeLib = path.join(process.env.HOME || process.env.USERPROFILE, '.node-gyp',
+      process.version.slice(1), arch, 'node.lib')
+    var parentDir = path.dirname(nodeLib)
+    if (!fs.existsSync(parentDir)) {
+      fs.mkdirSync(parentDir)
+    }
+    request(url).pipe(fs.createWriteStream(nodeLib)).on('finish', function () {
+      if (io) {
+        // copy node.lib to iojs.lib
+        var iojsLib = path.join(parentDir, 'iojs.lib')
+        fs.createReadStream(nodeLib).pipe(fs.createWriteStream(iojsLib)).on('finish', done)
+      } else {
+        done()
+      }
+    })
+  })
+}
