@@ -1,5 +1,5 @@
 {
-  "name": "node-gyp-install",
+  "name": "node-gyp-install-cn",
   "version": "1.2.0",
   "description": "Manually download node/iojs header files for usage with node-gyp.",
   "main": "index.js",
@@ -11,6 +11,7 @@
   "devDependencies": {
     "standard": "^2.5.0"
   },
+  "preferGlobal": true,
   "bin": {
     "node-gyp-install": "./bin.js"
   },
@@ -19,12 +20,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mafintosh/node-gyp-install.git"
+    "url": "https://github.com/cnpm/node-gyp-install.git"
   },
   "author": "Mathias Buus (@mafintosh)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/mafintosh/node-gyp-install/issues"
   },
-  "homepage": "https://github.com/mafintosh/node-gyp-install"
+  "homepage": "https://github.com/cnpm/node-gyp-install"
 }

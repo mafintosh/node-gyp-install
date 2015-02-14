@@ -1,9 +1,11 @@
 # node-gyp-install
 
+___This is a fork `node-gyp-install` using [cnpm mirrors](https://npm.taobao.org/mirrors).___
+
 Manually download node/iojs header files for usage with node-gyp.
 
 ``` sh
-npm install node-gyp-install
+npm install node-gyp-install-cn -g
 ```
 
 [![build status](http://img.shields.io/travis/mafintosh/node-gyp-install.svg?style=flat)](http://travis-ci.org/mafintosh/node-gyp-install)
