@@ -7,12 +7,17 @@ var zlib = require('zlib')
 var fs = require('fs')
 var path = require('path')
 
+var distBase = 'https://iojs.org/dist/'
+if (process.version.indexOf('nightly') > -1) {
+  distBase = 'https://iojs.org/download/nightly/'
+}
+
 var io = parseInt(process.version.slice(1), 10) >= 1 // yolo
-var iojsDistUrl = process.env.NVM_IOJS_ORG_MIRROR || 'https://iojs.org/dist/'
+var iojsDistUrl = process.env.NVM_IOJS_ORG_MIRROR || distBase
 if (iojsDistUrl[iojsDistUrl.length - 1] !== '/') {
   iojsDistUrl += '/'
 }
-var nodeDistUrl = process.env.NVM_NODEJS_ORG_MIRROR || 'https://iojs.org/dist/'
+var nodeDistUrl = process.env.NVM_NODEJS_ORG_MIRROR || distBase
 if (nodeDistUrl[nodeDistUrl.length - 1] !== '/') {
   nodeDistUrl += '/'
 }
