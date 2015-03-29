@@ -7,12 +7,12 @@ var zlib = require('zlib')
 var fs = require('fs')
 var path = require('path')
 
-var io = parseInt(process.version.slice(1), 10) >= 1 // yolo
+var io = process.execPath.indexOf('iojs') !== -1
 var iojsDistUrl = process.env.NVM_IOJS_ORG_MIRROR || 'https://iojs.org/dist/'
 if (iojsDistUrl[iojsDistUrl.length - 1] !== '/') {
   iojsDistUrl += '/'
 }
-var nodeDistUrl = process.env.NVM_NODEJS_ORG_MIRROR || 'https://iojs.org/dist/'
+var nodeDistUrl = process.env.NVM_NODEJS_ORG_MIRROR || 'https://nodejs.org/dist/'
 if (nodeDistUrl[nodeDistUrl.length - 1] !== '/') {
   nodeDistUrl += '/'
 }
@@ -26,7 +26,7 @@ var target = path.join(process.env.HOME || process.env.USERPROFILE, '.node-gyp',
 if (fs.existsSync(path.join(target, 'installVersion'))) {
   console.log('Header files already fetched')
   console.log('node-gyp should now work for %s', process.version)
-  process.exit(1)
+  process.exit(0)
 }
 
 console.log('Fetching header files from %s', url)

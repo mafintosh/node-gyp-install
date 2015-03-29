@@ -15,7 +15,7 @@
     "node-gyp-install": "./bin.js"
   },
   "scripts": {
-    "test": "standard"
+    "test": "standard && node bin.js && node bin.js"
   },
   "repository": {
     "type": "git",
