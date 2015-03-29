@@ -8,10 +8,13 @@ var fs = require('fs')
 var path = require('path')
 
 var io = process.execPath.indexOf('iojs') !== -1
-var iojsDistUrl = process.env.NVM_IOJS_ORG_MIRROR || 'https://iojs.org/dist/'
+var nightly = process.version.indexOf('nightly') > -1
+
+var iojsDistUrl = process.env.NVM_IOJS_ORG_MIRROR || (nightly ? 'https://iojs.org/download/nightly/' : 'https://iojs.org/dist/')
 if (iojsDistUrl[iojsDistUrl.length - 1] !== '/') {
   iojsDistUrl += '/'
 }
+
 var nodeDistUrl = process.env.NVM_NODEJS_ORG_MIRROR || 'https://nodejs.org/dist/'
 if (nodeDistUrl[nodeDistUrl.length - 1] !== '/') {
   nodeDistUrl += '/'
