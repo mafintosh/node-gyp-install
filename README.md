@@ -3,7 +3,7 @@
 Manually download node/iojs header files for usage with node-gyp.
 
 ``` sh
-npm install node-gyp-install
+npm install -g node-gyp-install
 ```
 
 [![build status](http://img.shields.io/travis/mafintosh/node-gyp-install.svg?style=flat)](http://travis-ci.org/mafintosh/node-gyp-install)
