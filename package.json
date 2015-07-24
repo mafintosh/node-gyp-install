@@ -4,12 +4,15 @@
   "description": "Manually download node/iojs header files for usage with node-gyp.",
   "main": "index.js",
   "dependencies": {
+    "after-all": "^2.0.2",
+    "minimist": "^1.1.2",
+    "pump": "^1.0.0",
     "request": "^2.53.0",
     "tar-fs": "^1.4.2",
     "tar-map-stream": "^1.0.0"
   },
   "devDependencies": {
-    "standard": "^2.5.0"
+    "standard": "^4.5.4"
   },
   "bin": {
     "node-gyp-install": "./bin.js"

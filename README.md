@@ -20,10 +20,12 @@ node-gyp-install
 Afterwards installing native modules that uses node-gyp using iojs should *just work*
 
 ``` sh
-# assuming you are using iojs
 node-gyp-install
 npm install level # does not explode \o/
 ```
+
+Per default node-gyp-install will install header files for your current node version.
+To see all available options see `node-gyp-install --help`.
 
 ### Download From Mirrors
 
@@ -34,6 +36,17 @@ Take an example for users from China:
 ``` sh
 export NVM_NODEJS_ORG_MIRROR=http://npm.taobao.org/mirrors/node
 export NVM_IOJS_ORG_MIRROR=http://npm.taobao.org/mirrors/iojs
+```
+
+## Programmatic usage
+
+You can also use this as a module
+
+``` js
+var install = require('node-gyp-install')
+install(function (err) {
+  console.log('header files installed', err)
+})
 ```
 
 ## License
