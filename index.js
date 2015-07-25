@@ -25,6 +25,8 @@ function install (opts, cb) {
   var io = opts.iojs !== undefined ? opts.iojs : process.execPath.indexOf('iojs') !== -1
   var platform = opts.platform || process.platform
 
+  if (io && version[1] === '0') io = false
+
   var defaultIojsUrl = nightly ? 'https://iojs.org/download/nightly/' : 'https://iojs.org/dist/'
   var iojsDistUrl = pad(process.env.NVM_IOJS_ORG_MIRROR || defaultIojsUrl)
   var nodeDistUrl = pad(process.env.NVM_NODEJS_ORG_MIRROR || 'https://nodejs.org/dist/')
