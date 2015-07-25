@@ -22,10 +22,8 @@ function install (opts, cb) {
   if (version[0] !== 'v') version = 'v' + version
 
   var nightly = opts.nightly !== undefined ? opts.nightly : version.indexOf('nightly') > -1
-  var io = opts.iojs !== undefined ? opts.iojs : process.execPath.indexOf('iojs') !== -1
+  var io = opts.iojs !== undefined ? opts.iojs : (opts.version ? iojsVersion(version) : process.execPath.indexOf('iojs') !== -1)
   var platform = opts.platform || process.platform
-
-  if (io && version[1] === '0') io = false
 
   var defaultIojsUrl = nightly ? 'https://iojs.org/download/nightly/' : 'https://iojs.org/dist/'
   var iojsDistUrl = pad(process.env.NVM_IOJS_ORG_MIRROR || defaultIojsUrl)
@@ -88,6 +86,10 @@ function install (opts, cb) {
       })
     })
   }
+}
+
+function iojsVersion (v) {
+  return v[1] !== '0'
 }
 
 function pad (url) {
