@@ -18,7 +18,9 @@ function install (opts, cb) {
 
   var log = opts.log || noop
   var version = opts.version || process.version
-  var nightly = opts.nightly !== undefined ? opts.nightly : process.version.indexOf('nightly') > -1
+  if (version[0] !== 'v') version = 'v' + version
+
+  var nightly = opts.nightly !== undefined ? opts.nightly : version.indexOf('nightly') > -1
   var io = opts.iojs !== undefined ? opts.iojs : process.execPath.indexOf('iojs') !== -1
   var platform = opts.platform || process.platform
 

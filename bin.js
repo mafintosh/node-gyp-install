@@ -8,7 +8,6 @@ var argv = minimist(process.argv, {
 })
 
 argv.log = !argv.quiet && console.log
-if (argv.version && argv.version[0] !== 'v') argv.version = 'v' + argv.version
 
 if (argv.help) {
   console.error(
