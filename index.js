@@ -8,6 +8,7 @@ var fs = require('fs')
 var path = require('path')
 var pump = require('pump')
 var after = require('after-all')
+var multi = require('multi-write-stream')
 
 module.exports = install
 
@@ -74,13 +75,14 @@ function install (opts, cb) {
 
     urls.forEach(function (url, index) {
       var arch = index === 0 ? 'ia32' : 'x64'
-      var lib = path.join(target, arch, io ? 'iojs.lib' : 'node.lib')
-      var parentDir = path.dirname(lib)
+      var nodeLib = path.join(target, arch, 'node.lib')
+      var ioLib = path.join(target, arch, 'iojs.lib')
+      var parentDir = path.dirname(nodeLib)
       var done = next()
 
       log('Fetching windows ' + arch + ' lib from ' + url)
       fs.mkdir(parentDir, function () {
-        pump(request(url), fs.createWriteStream(lib), done)
+        pump(request(url), multi([fs.createWriteStream(nodeLib), fs.createWriteStream(ioLib)]), done)
       })
     })
   }
