@@ -22,7 +22,7 @@ function install (opts, cb) {
   if (version[0] !== 'v') version = 'v' + version
 
   var nightly = opts.nightly !== undefined ? opts.nightly : version.indexOf('nightly') > -1
-  var io = opts.iojs !== undefined ? opts.iojs : (opts.version ? iojsVersion(version) : process.execPath.indexOf('iojs') !== -1)
+  var io = opts.iojs !== undefined ? opts.iojs : iojsVersion(version)
   var platform = opts.platform || process.platform
 
   var defaultIojsUrl = nightly ? 'https://iojs.org/download/nightly/' : 'https://iojs.org/dist/'
