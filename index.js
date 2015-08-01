@@ -37,8 +37,8 @@ function install (opts, cb) {
 
   fs.exists(path.join(target, 'installVersion'), function (exists) {
     if (exists && !opts.force) {
-      if (log) log.info('node-gyp-install', 'Header files already fetched')
-      if (log) log.info('node-gyp-install', 'node-gyp should now work for ' + version)
+      if (log) log.info('install', 'Header files already fetched')
+      if (log) log.info('install', 'node-gyp should now work for ' + version)
       return cb(null)
     }
 
@@ -52,7 +52,7 @@ function install (opts, cb) {
           if (err) return cb(err)
           fs.writeFile(path.join(target, 'installVersion'), '9', function (err) {
             if (err) return cb(err)
-            if (log) log.info('node-gyp-install', 'node-gyp should now work for ' + version)
+            if (log) log.info('install', 'node-gyp should now work for ' + version)
             cb()
           })
         })

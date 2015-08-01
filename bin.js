@@ -2,12 +2,14 @@
 
 var install = require('./')
 var minimist = require('minimist')
+var log = require('npmlog')
 var argv = minimist(process.argv, {
   booleans: ['iojs', 'nightly', 'quiet', 'force'],
   alias: {iojs: 'io', v: 'version', p: 'platform', d: 'dist', q: 'quiet', n: 'nightly', f: 'force'}
 })
 
-argv.log = !argv.quiet && require('npmlog')
+log.heading = 'node-gyp-install'
+argv.log = !argv.quiet && log
 
 if (argv.help) {
   console.error(
