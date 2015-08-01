@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var request = require('request')
+var get = require('simple-get')
 var map = require('tar-map-stream')
 var tar = require('tar-fs')
 var zlib = require('zlib')
@@ -17,7 +17,7 @@ function install (opts, cb) {
   if (!opts) opts = {}
   if (!cb) cb = noop
 
-  var log = opts.log || noop
+  var log = opts.log
   var version = opts.version || process.version
   if (version[0] !== 'v') version = 'v' + version
 
@@ -37,20 +37,24 @@ function install (opts, cb) {
 
   fs.exists(path.join(target, 'installVersion'), function (exists) {
     if (exists && !opts.force) {
-      log('Header files already fetched')
-      log('node-gyp should now work for ' + version)
+      if (log) log.info('node-gyp-install', 'Header files already fetched')
+      if (log) log.info('node-gyp-install', 'node-gyp should now work for ' + version)
       return cb(null)
     }
 
-    log('Fetching header files from ' + url)
-    pump(request(url), zlib.createGunzip(), map(mapEntry), tar.extract(target, {strip: 1}), function (err) {
+    if (log) log.http('request', url)
+    get(url, function (err, res) {
       if (err) return cb(err)
-      fetchWindows(function (err) {
+      if (log) log.http(res.statusCode, url)
+      pump(res, zlib.createGunzip(), map(mapEntry), tar.extract(target, {strip: 1}), function (err) {
         if (err) return cb(err)
-        fs.writeFile(path.join(target, 'installVersion'), '9', function (err) {
+        fetchWindows(function (err) {
           if (err) return cb(err)
-          log('node-gyp should now work for ' + version)
-          cb()
+          fs.writeFile(path.join(target, 'installVersion'), '9', function (err) {
+            if (err) return cb(err)
+            if (log) log.info('node-gyp-install', 'node-gyp should now work for ' + version)
+            cb()
+          })
         })
       })
     })
@@ -80,9 +84,13 @@ function install (opts, cb) {
       var parentDir = path.dirname(nodeLib)
       var done = next()
 
-      log('Fetching windows ' + arch + ' lib from ' + url)
+      if (log) log.http('request', url)
       fs.mkdir(parentDir, function () {
-        pump(request(url), multi([fs.createWriteStream(nodeLib), fs.createWriteStream(ioLib)]), done)
+        get(url, function (err, res) {
+          if (err) return done(err)
+          log.http(res.statusCode, url)
+          pump(res, multi([fs.createWriteStream(nodeLib), fs.createWriteStream(ioLib)]), done)
+        })
       })
     })
   }

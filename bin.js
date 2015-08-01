@@ -7,7 +7,7 @@ var argv = minimist(process.argv, {
   alias: {iojs: 'io', v: 'version', p: 'platform', d: 'dist', q: 'quiet', n: 'nightly', f: 'force'}
 })
 
-argv.log = !argv.quiet && console.log
+argv.log = !argv.quiet && require('npmlog')
 
 if (argv.help) {
   console.error(

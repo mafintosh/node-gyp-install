@@ -7,8 +7,9 @@
     "after-all": "^2.0.2",
     "minimist": "^1.1.2",
     "multi-write-stream": "^1.0.3",
+    "npmlog": "^1.2.1",
     "pump": "^1.0.0",
-    "request": "^2.53.0",
+    "simple-get": "^1.4.2",
     "tar-fs": "^1.4.2",
     "tar-map-stream": "^1.0.0"
   },
