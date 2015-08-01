@@ -1,6 +1,6 @@
 {
   "name": "node-gyp-install",
-  "version": "1.4.4",
+  "version": "2.0.0",
   "description": "Manually download node/iojs header files for usage with node-gyp.",
   "main": "index.js",
   "dependencies": {
