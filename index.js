@@ -35,8 +35,8 @@ function install (opts, cb) {
 
   var target = path.join(process.env.HOME || process.env.USERPROFILE, '.node-gyp', version.slice(1))
 
-  fs.exists(path.join(target, 'installVersion'), function (exists) {
-    if (exists && !opts.force) {
+  exists(function (err) {
+    if (!err && !opts.force) {
       if (log) log.info('install', 'Header files already fetched')
       if (log) log.info('install', 'node-gyp should now work for ' + version)
       return cb(null)
@@ -59,6 +59,15 @@ function install (opts, cb) {
       })
     })
   })
+
+  function exists (cb) {
+    fs.exists(path.join(target, 'installVersion'), function (exists) {
+      if (!exists) return cb(new Error('missing installVersion'))
+      fs.exists(path.join(target, 'common.gypi'), function (exists) {
+        cb(exists ? null : new Error('missing common.gypi'))
+      })
+    })
+  }
 
   function mapEntry (entry) {
     return /(\.gypi$)|(\.h$)/.test(entry.name) ? entry : null
