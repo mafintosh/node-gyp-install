@@ -106,7 +106,7 @@ function install (opts, cb) {
 }
 
 function iojsVersion (v) {
-  return v[1] !== '0'
+  return v[1] !== '0' && v[1] < 4
 }
 
 function pad (url) {
