@@ -9,6 +9,7 @@ var path = require('path')
 var pump = require('pump')
 var after = require('after-all')
 var multi = require('multi-write-stream')
+var semver = require('semver')
 
 module.exports = install
 
@@ -76,13 +77,23 @@ function install (opts, cb) {
   function fetchWindows (cb) {
     if (platform !== 'win32') return cb()
 
-    var urls = io ? [
-      iojsDistUrl + version + '/win-x86/iojs.lib',
-      iojsDistUrl + version + '/win-x64/iojs.lib'
-    ] : [
-      nodeDistUrl + version + '/node.lib',
-      nodeDistUrl + version + '/x64/node.lib'
-    ]
+    var urls
+    if (io) {
+      urls = [
+        iojsDistUrl + version + '/win-x86/iojs.lib',
+        iojsDistUrl + version + '/win-x64/iojs.lib'
+      ]
+    } else if (semver.satisfies(version, '>=4.0.0')) {
+      urls = [
+        nodeDistUrl + version + '/win-x86/node.lib',
+        nodeDistUrl + version + '/win-x64/node.lib'
+      ]
+    } else {
+      urls = [
+        nodeDistUrl + version + '/node.lib',
+        nodeDistUrl + version + '/x64/node.lib'
+      ]
+    }
 
     var next = after(cb)
 
@@ -106,7 +117,7 @@ function install (opts, cb) {
 }
 
 function iojsVersion (v) {
-  return v[1] !== '0' && v[1] < 4
+  return semver.satisfies(v, '>=1.0.0 <4.0.0')
 }
 
 function pad (url) {
