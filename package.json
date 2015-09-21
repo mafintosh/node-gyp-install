@@ -9,6 +9,7 @@
     "multi-write-stream": "^1.0.3",
     "npmlog": "^1.2.1",
     "pump": "^1.0.0",
+    "semver": "~5.0.3",
     "simple-get": "^1.4.2",
     "tar-fs": "^1.4.2",
     "tar-map-stream": "^1.0.0"
