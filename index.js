@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var get = require('simple-get')
+var simpleget = require('simple-get')
 var map = require('tar-map-stream')
 var tar = require('tar-fs')
 var zlib = require('zlib')
@@ -12,6 +12,15 @@ var multi = require('multi-write-stream')
 var semver = require('semver')
 
 module.exports = install
+
+function _get (url, callback) {
+  return simpleget({
+    url: url,
+    headers: {
+      'accept-encoding': ''
+    }
+  }, callback)
+}
 
 function install (opts, cb) {
   if (typeof opts === 'function') return install(null, opts)
@@ -44,7 +53,7 @@ function install (opts, cb) {
     }
 
     if (log) log.http('request', url)
-    get(url, function (err, res) {
+    _get(url, function (err, res) {
       if (err) return cb(err)
       if (log) log.http(res.statusCode, url)
       pump(res, zlib.createGunzip(), map(mapEntry), tar.extract(target, {strip: 1}), function (err) {
@@ -106,7 +115,7 @@ function install (opts, cb) {
 
       if (log) log.http('request', url)
       fs.mkdir(parentDir, function () {
-        get(url, function (err, res) {
+        _get(url, function (err, res) {
           if (err) return done(err)
           log.http(res.statusCode, url)
           pump(res, multi([fs.createWriteStream(nodeLib), fs.createWriteStream(ioLib)]), done)
