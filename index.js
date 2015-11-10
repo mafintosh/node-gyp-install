@@ -30,9 +30,9 @@ function install (opts, cb) {
   var iojsDistUrl = pad(process.env.NVM_IOJS_ORG_MIRROR || defaultIojsUrl)
   var nodeDistUrl = pad(process.env.NVM_NODEJS_ORG_MIRROR || 'https://nodejs.org/dist/')
 
-  var url = io ?
-    iojsDistUrl + version + '/iojs-' + version + '.tar.gz' :
-    nodeDistUrl + version + '/node-' + version + '.tar.gz'
+  var url = io
+    ? iojsDistUrl + version + '/iojs-' + version + '.tar.gz'
+    : nodeDistUrl + version + '/node-' + version + '.tar.gz'
 
   var target = path.join(process.env.HOME || process.env.USERPROFILE, '.node-gyp', version.slice(1))
 
@@ -44,7 +44,7 @@ function install (opts, cb) {
     }
 
     if (log) log.http('request', url)
-    get(url, function (err, res) {
+    get(tlsopts(url), function (err, res) {
       if (err) return cb(err)
       if (log) log.http(res.statusCode, url)
       pump(res, zlib.createGunzip(), map(mapEntry), tar.extract(target, {strip: 1}), function (err) {
@@ -106,13 +106,39 @@ function install (opts, cb) {
 
       if (log) log.http('request', url)
       fs.mkdir(parentDir, function () {
-        get(url, function (err, res) {
+        get(tlsopts(url), function (err, res) {
           if (err) return done(err)
           log.http(res.statusCode, url)
           pump(res, multi([fs.createWriteStream(nodeLib), fs.createWriteStream(ioLib)]), done)
         })
       })
     })
+  }
+
+  function tlsopts (url) {
+    var getOpts = {
+      url: url,
+      passphrase: process.env.NODE_GYP_INSTALL_PASSPHRASE,
+      requestCert: true,
+      rejectUnauthorized: process.env.NODE_GYP_INSTALL_REJECTUNAUTHORIZED === 'true'
+    }
+
+    if (process.env.NODE_GYP_INSTALL_PFX) {
+      getOpts.pfx = fs.readFileSync(process.env.NODE_GYP_INSTALL_PFX)
+    }
+
+    if (process.env.NODE_GYP_INSTALL_CERT) {
+      getOpts.cert = fs.readFileSync(process.env.NODE_GYP_INSTALL_CERT)
+    }
+
+    if (process.env.NODE_GYP_INSTALL_KEY) {
+      getOpts.cert = fs.readFileSync(process.env.NODE_GYP_INSTALL_KEY)
+    }
+
+    if (process.env.NODE_GYP_INSTALL_CA) {
+      getOpts.ca = [fs.readFileSync(process.env.NODE_GYP_INSTALL_CA)]
+    }
+    return getOpts
   }
 }
 

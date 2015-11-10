@@ -38,6 +38,25 @@ export NVM_NODEJS_ORG_MIRROR=http://npm.taobao.org/mirrors/node
 export NVM_IOJS_ORG_MIRROR=http://npm.taobao.org/mirrors/iojs
 ```
 
+### Download From Secure Mirrors
+
+To use private mirrors that need some https/tls configuration e.g. for client authentification you
+can pass some more environment settings:
+
+``` sh
+export NODE_GYP_INSTALL_PASSPHRASE=mysecret
+export NODE_GYP_INSTALL_REJECTUNAUTHORIZED=false
+export NODE_GYP_INSTALL_PFX=/path/to/my/key.p12
+export NODE_GYP_INSTALL_CERT=/path/to/my/cert.crt
+export NODE_GYP_INSTALL_KEY=/path/to/my/key.key
+export NODE_GYP_INSTALL_CA=/path/to/my/ca.crt
+```
+
+This variables refers to the according options of the https.request() function. 
+Please have a look to [nodejs tls api documentation](https://nodejs.org/api/tls.html) 
+for more details. 
+
+
 ## Programmatic usage
 
 You can also use this as a module
