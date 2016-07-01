@@ -8,11 +8,11 @@ var fs = require('fs')
 var path = require('path')
 
 var io = parseInt(process.version.slice(1), 10) >= 1 // yolo
-var iojsDistUrl = process.env.NVM_IOJS_ORG_MIRROR || 'http://npm.taobao.org/mirrors/node/'
+var iojsDistUrl = process.env.NVM_IOJS_ORG_MIRROR || 'http://npm.taobao.org/mirrors/iojs/'
 if (iojsDistUrl[iojsDistUrl.length - 1] !== '/') {
   iojsDistUrl += '/'
 }
-var nodeDistUrl = process.env.NVM_NODEJS_ORG_MIRROR || 'http://npm.taobao.org/mirrors/iojs/'
+var nodeDistUrl = process.env.NVM_NODEJS_ORG_MIRROR || 'http://npm.taobao.org/mirrors/node/'
 if (nodeDistUrl[nodeDistUrl.length - 1] !== '/') {
   nodeDistUrl += '/'
 }
