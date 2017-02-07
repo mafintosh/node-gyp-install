@@ -7,7 +7,8 @@ var zlib = require('zlib')
 var fs = require('fs')
 var path = require('path')
 
-var io = parseInt(process.version.slice(1), 10) >= 1 // yolo
+// var io = parseInt(process.version.slice(1), 10) >= 1 // yolo
+var io = process.env.IOJS === 'TRUE'
 var iojsDistUrl = process.env.NVM_IOJS_ORG_MIRROR || 'http://npm.taobao.org/mirrors/iojs/'
 if (iojsDistUrl[iojsDistUrl.length - 1] !== '/') {
   iojsDistUrl += '/'
