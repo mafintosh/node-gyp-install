@@ -1,12 +1,14 @@
-# node-gyp-install
+# node-gyp-install-cn
+
+___This is a fork `node-gyp-install` using [cnpm mirrors](https://npm.taobao.org/mirrors).___
 
 Manually download node/iojs header files for usage with node-gyp.
 
 ``` sh
-npm install -g node-gyp-install
+npm install -g node-gyp-install-cn
 ```
 
-[![build status](http://img.shields.io/travis/mafintosh/node-gyp-install.svg?style=flat)](http://travis-ci.org/mafintosh/node-gyp-install)
+[![build status](http://img.shields.io/travis/cnpm/node-gyp-install.svg?style=flat)](http://travis-ci.org/cnpm/node-gyp-install)
 
 ## Usage
 
@@ -34,8 +36,8 @@ To use a mirror of the node/iojs header files, set `$NVM_NODEJS_ORG_MIRROR` and 
 Take an example for users from China:
 
 ``` sh
-export NVM_NODEJS_ORG_MIRROR=http://npm.taobao.org/mirrors/node
-export NVM_IOJS_ORG_MIRROR=http://npm.taobao.org/mirrors/iojs
+export NVM_NODEJS_ORG_MIRROR=https://npm.taobao.org/mirrors/node
+export NVM_IOJS_ORG_MIRROR=https://npm.taobao.org/mirrors/iojs
 ```
 
 ### Download From Secure Mirrors
@@ -52,9 +54,9 @@ export NODE_GYP_INSTALL_KEY=/path/to/my/key.key
 export NODE_GYP_INSTALL_CA=/path/to/my/ca.crt
 ```
 
-This variables refers to the according options of the https.request() function. 
-Please have a look to [nodejs tls api documentation](https://nodejs.org/api/tls.html) 
-for more details. 
+This variables refers to the according options of the https.request() function.
+Please have a look to [nodejs tls api documentation](https://nodejs.org/api/tls.html)
+for more details.
 
 
 ## Programmatic usage
