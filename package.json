@@ -1,22 +1,28 @@
 {
   "name": "node-gyp-install-cn",
-  "version": "1.2.2",
+  "version": "2.2.0",
   "description": "Manually download node/iojs header files for usage with node-gyp.",
   "main": "index.js",
   "dependencies": {
-    "request": "^2.53.0",
+    "after-all": "^2.0.2",
+    "minimist": "^1.1.2",
+    "multi-write-stream": "^1.0.3",
+    "npmlog": "^1.2.1",
+    "pump": "^1.0.0",
+    "semver": "~5.0.3",
+    "simple-get": "^1.4.2",
     "tar-fs": "^1.4.2",
     "tar-map-stream": "^1.0.0"
   },
   "devDependencies": {
-    "standard": "^2.5.0"
+    "standard": "^4.5.4"
   },
   "preferGlobal": true,
   "bin": {
     "node-gyp-install": "./bin.js"
   },
   "scripts": {
-    "test": "standard"
+    "test": "standard && node bin.js && node bin.js"
   },
   "repository": {
     "type": "git",
