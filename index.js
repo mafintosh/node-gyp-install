@@ -109,7 +109,19 @@ function install (opts, cb) {
         get(tlsopts(url), function (err, res) {
           if (err) return done(err)
           log.http(res.statusCode, url)
-          pump(res, multi([fs.createWriteStream(nodeLib), fs.createWriteStream(ioLib)]), done)
+          pump(res, multi([fs.createWriteStream(nodeLib), fs.createWriteStream(ioLib)]), function (err) {
+            // HACK: The pump library makes certain assumptions regarding
+            //   the correct order for a stream to finish, end and close.
+            //   However the unzip-response library used by simple-get violates
+            //   these assumptions by forwarding the `close` event to the unzip
+            //   stream from the request without forwarding the matching
+            //   `end` or `finish` events.  Due to this violation,
+            //   `premature close` is not actually a fatal error in this case.
+            if (err && err.message === 'premature close') {
+              return done()
+            }
+            done(err)
+          })
         })
       })
     })
